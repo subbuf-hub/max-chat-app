@@ -1,0 +1,17 @@
+# Зависимости
+node_modules
+dist
+
+# Переменные окружения
+.env
+.env.local
+.env.*.local
+
+# Логи
+*.log
+npm-debug.log*
+
+# Редакторы
+.vscode
+.idea
+.DS_Store

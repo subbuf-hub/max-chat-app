@@ -1,0 +1,6 @@
+services:
+  max-chat-app:
+    build: .
+    ports:
+      - "8080:80"  # Пробрасываем порт 8080 на вашем компьютере на порт 80 внутри контейнера
+    restart: unless-stopped
