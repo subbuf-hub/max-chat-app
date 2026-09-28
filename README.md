@@ -1,32 +1,86 @@
-# React + TypeScript + Vite
+# 💬 MAX Messenger Chat
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Тестовое задание: Разработка пользовательского интерфейса для отправки и получения сообщений в мессенджере MAX с использованием GREEN-API.
 
-Currently, two official plugins are available:
+## 📋 О проекте
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Приложение представляет собой веб-интерфейс (SPA) для обмена текстовыми сообщениями. Интерфейс стилизован под веб-версию мессенджера MAX. Взаимодействие с мессенджером происходит через REST API сервиса GREEN-API.
 
-## React Compiler
+### 🛠 Технологический стек
+*   **Frontend:** React 18, TypeScript
+*   **Сборщик:** Vite
+*   **Стилизация:** Чистый CSS (CSS-переменные, Flexbox)
+*   **Контейнеризация:** Docker, Docker Compose, Nginx
+*   **API:** GREEN-API (HTTP API)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### ✨ Реализованный функционал
+*   **Авторизация:** Ввод учетных данных инстанса (`idInstance`, `apiTokenInstance`, `apiUrl`) для подключения.
+*   **Отправка сообщений:** Отправка текстовых сообщений получателю через метод `SendMessage`.
+*   **Получение сообщений:** Асинхронное получение входящих сообщений через методы `ReceiveNotification` и `DeleteNotification` (long polling).
+*   **UI/UX:** 
+    *   Интерфейс, приближенный к веб-версии MAX.
+    *   Разделение сообщений на входящие и исходящие (пузыри).
+    *   Автоматический скролл к новым сообщениям.
+    *   Оптимистичный UI (сообщение появляется мгновенно, не дожидаясь ответа сервера).
+*   **Инфраструктура:** Полностью готов к развертыванию через Docker.
 
-## Expanding the Oxlint configuration
+## 🚀 Быстрый старт
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+### Предварительные требования
+*   Node.js (версия 18 или выше)
+*   npm или yarn
+*   Аккаунт в [GREEN-API](https://green-api.com/) с созданным и **авторизованным** инстансом.
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
+### Вариант 1: Локальный запуск (для разработки)
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+1. Клонируйте репозиторий:
+   ```bash
+   git clone https://github.com/subbuf-hub/max-chat-app.git
+   cd max-chat-app
+
+2. Установите зависимости:
+   ```bash
+   npm install
+
+3. Запустите сервер разработки:
+   ```bash
+   npm run dev
+
+Приложение будет доступно по адресу http://localhost:5173.
+
+### Вариант 2: Запуск через Docker (для production)
+
+Убедитесь, что у вас запущен Docker Desktop.
+1. Соберите и запустите контейнер:
+   ```bash
+   docker-compose up -d --build
+
+2. Приложение будет доступно по адресу http://localhost:8080
+
+⚙️ Как пользоваться
+
+    Подготовка GREEN-API:
+
+        Убедитесь, что ваш инстанс в личном кабинете GREEN-API находится в статусе «Авторизован».
+
+        В настройках инстанса должен быть пустой webhookUrl, чтобы уведомления попадали в очередь HTTP API.
+
+        Включите опцию «Получать уведомления о входящих сообщениях» (incomingWebhook).
+
+    Подключение в приложении:
+
+        Введите API URL (например, https://3100.api.green-api.com), ID Instance и API Token Instance.
+
+        Нажмите «Подключиться».
+
+    Начало чата:
+
+        Введите номер телефона получателя в международном формате без знака + (например, 79999999999).
+
+        Нажмите «Создать чат».
+
+    Общение:
+
+        Напишите сообщение в поле ввода и нажмите «Отправить» (или клавишу Enter).
+
+        Входящие сообщения будут появляться автоматически.
